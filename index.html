@@ -5,130 +5,74 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Game List</title>
-    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap@4.4.1/dist/css/bootstrap.min.css"
-        integrity="sha384-Vkoo8x4CGsO3+Hhxv8T/Q5PaXtkKtu6ug5TOeNV6gBiFeWPGFN9MuhOf23Q9Ifjh" crossorigin="anonymous">
     <link href='https://fonts.googleapis.com/css?family=Poppins' rel='stylesheet'>
-    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.2/css/all.min.css" integrity="sha512-z3gLpd7yknf1YoNbCzqRKc4qyor8gaKU1qmn+CShxbuBusANI9QpRohGBreCFkKxLhei6S9CQXFEbbKuqLg0DA==" crossorigin="anonymous" referrerpolicy="no-referrer" />
-    <style>
-        body, html {
-            height: 100%;
-            margin: 0; /* Remove default margin */
-            padding: 0; /* Remove default padding */
-        }
-        body {
-            font-family: 'Poppins';
-            margin: 0;
-            /* background-position: center; */
-            background-size:cover ;
-            /* background-repeat: no-repeat; */
-            /* background-color: #000000; */
-            background-image: url('images/background.png');
-        }
-
-        .tree {
-            margin: 0 auto;
-            text-align: center;
-            width: 100%;
-            max-width: 800px;
-        }
-
-        .tree .username {
-            font-size: 40px;
-            font-weight: 600;
-        }
-
-        .tree .links a {
-            margin: 0.75em auto;
-        }
-
-        .tree .footer {
-            margin: 2rem;
-        }
-
-        .tree .profile-pic {
-            width: 70px;
-            border-radius: 50%;
-            text-align: center;
-        }
-
-        a.btn {
-            background-color: #fff;
-        }
-        .icon-size {
-            font-size: 2rem;
-        }
-    </style>
+    <link href="./style.css" rel="stylesheet">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.1/css/all.min.css">
 </head>
 
 <body>
-    <div class="tree">
-        <a href="about.html" ><img src="images/pp.jpg" class="profile-pic m-3" /></a> <br>
-        <a class="text-center text-white">About us</a>
-        <div class="username text-white"> <i class="fa-regular fa-circle-down"></i> We Offer</div>
-        <p class="mt-2 text-white">Click on the game to play</p>
-        <div class="container">
-            <div class="row">
-                <div class="col">
-                    <a href="http://start.firekirin.xyz:8580/index.html" ><img src="images/Firekirin.jpg" class="profile-pic m-3" /></a>
-                    <a href="https://download.gamevault999.com" ><img src="images/gv.png" class="profile-pic m-3" /></a>
-                    <a href="https://dl.juwa777.com/" ><img src="images/juwa.jpeg" class="profile-pic m-2 img-fluid" /></a>
-                    <a href="https://milkywayapp.xyz/" ><img src="images/my.jpeg" class="profile-pic m-3" /></a>
-                    <a href="https://pandamaster.vip:8888/" ><img src="images/pandamaster.jpg" class="profile-pic m-3" /></a>
-                </div>
-            </div>
-            <div class="row">
-                <div class="col">
-                    <a href="http://start.orionstars.vip:8580/index.html" ><img src="images/orion.jpeg" class="profile-pic m-3" /></a>
-                    <a href="https://www.ultrapanda.mobi/" ><img src="images/panda.jpeg" class="profile-pic m-3" /></a>
-                    <a href="https://www.vblink777.club/"><img src="images/vblink.jpeg" class="profile-pic m-3" /></a>
-                    <a href="https://m.gamesirius999.com/"><img src="images/sirius.jpg" class="profile-pic m-3" /></a>
-                    <a href="https://highrollersweep.cc/"><img src="images/HighRoller.png" class="profile-pic m-3" /></a>
-                    <a href="https://www.mafia77777.com/"><img src="images/mafia.jpg" class="profile-pic m-3" /></a>
-                </div>
-            </div>
-            <div class="row">
-                <div class="col">
-                    <!-- Messenger Chat plugin Code -->
-                    <div id="fb-root"></div>
-
-                    <!-- Your Chat plugin code -->
-                    <div id="fb-customer-chat" class="fb-customerchat">
-                    </div>
-
-                    <script>
-                    var chatbox = document.getElementById('fb-customer-chat');
-                    chatbox.setAttribute("page_id", "168852486311024");
-                    chatbox.setAttribute("attribution", "biz_inbox");
-                    </script>
-
-                    <!-- Your SDK code -->
-                    <script>
-                    window.fbAsyncInit = function() {
-                        FB.init({
-                        xfbml            : true,
-                        version          : 'v18.0'
-                        });
-                    };
-
-                    (function(d, s, id) {
-                        var js, fjs = d.getElementsByTagName(s)[0];
-                        if (d.getElementById(id)) return;
-                        js = d.createElement(s); js.id = id;
-                        js.src = 'https://connect.facebook.net/en_US/sdk/xfbml.customerchat.js';
-                        fjs.parentNode.insertBefore(js, fjs);
-                    }(document, 'script', 'facebook-jssdk'));
-                    </script>
-                </div>
-            </div>
-            <div class="row justify-content-center">
-                <div class="col">
-                    <p class="text-white"> <i class="fa-solid fa-heart text-danger"></i> For freeplay message us on <i class="fa-solid fa-heart text-danger"></i></p>
-                    <a href="https://www.facebook.com/profile.php?id=61553779824003"><i class="fa-brands fa-facebook icon-size m-2"></i></a>
-                    <a href="https://t.me/lucygaming7777"><i class="fa-brands fa-telegram icon-size"></i></a>
-                </div>
-            </div>
-        </div>
+    <div class="social-media-container">
+        <!-- <img src="./images/pp.jpg">     -->
+        <p>For Freeplay <br> text us on</p>
+        <div class="social-icons">
+            <a href=""> <p> <i class="fa-brands fa-facebook-messenger"></i> Facebook</p></a>
+            <a href=""> <p> <i class="fa-brands fa-telegram"></i> Telegram</p></a>
+        </div>      
     </div>
-</body>
+    <main id="main-container">
+        <a href="http://start.firekirin.xyz:8580/index.html">
+            <div class="link-items">
+                <img src="images/Firekirin.jpg"/>
+                <p>Firekirin</p>
+            </div>  
+        </a>
+    </main>
+    <!-- <a href="https://download.gamevault999.com"><img src="images/gv.png" class="profile-pic m-3" /></a>
+    <a href="https://dl.juwa777.com/"><img src="images/juwa.jpeg" class="profile-pic m-2 img-fluid" /></a>
+    <a href="https://milkywayapp.xyz/"><img src="images/my.jpeg" class="profile-pic m-3" /></a>
+    <a href="https://pandamaster.vip:8888/"><img src="images/pandamaster.jpg" class="profile-pic m-3" /></a>
+    <a href="http://start.orionstars.vip:8580/index.html"><img src="images/orion.jpeg" class="profile-pic m-3" /></a>
+    <a href="https://www.ultrapanda.mobi/"><img src="images/panda.jpeg" class="profile-pic m-3" /></a>
+    <a href="https://www.vblink777.club/"><img src="images/vblink.jpeg" class="profile-pic m-3" /></a>
+    <a href="https://m.gamesirius999.com/"><img src="images/sirius.jpg" class="profile-pic m-3" /></a>
+    <a href="https://highrollersweep.cc/"><img src="images/HighRoller.png" class="profile-pic m-3" /></a>
+    <a href="https://www.mafia77777.com/"><img src="images/mafia.jpg" class="profile-pic m-3" /></a> -->
 
+    <script>
+        // List of links
+        const links = [
+          { href: "https://download.gamevault999.com", imgSrc: "images/gv.png", text: "Gamevault" },
+          { href: "https://milkywayapp.xyz/", imgSrc: "images/my.jpeg", text: "Milkyway" },
+          { href: "https://pandamaster.vip:8888/", imgSrc: "images/pandamaster.jpg", text: "Pandamaster" },
+          { href: "https://dl.juwa777.com/", imgSrc: "https://checkmysweep.com/images/juwa.jpeg", text: "Juwa" },
+          { href: "http://start.orionstars.vip:8580/index.html", imgSrc: "images/orion.jpeg", text: "Orionstars" }, 
+          { href: "https://www.ultrapanda.mobi/", imgSrc: "images/panda.jpeg", text: "Ultrapanda" }, 
+          { href: "http://m.lasvegassweeps.com/", imgSrc: "https://checkmysweep.com/images/vegawsweep.jpeg", text: "Vegas Sweeps" }, 
+          { href: "https://www.cashfrenzy777.com/", imgSrc: "https://checkmysweep.com/images/cashfrenzy.jpeg", text: "cashfrenzy" }, 
+          { href: "https://download.casinoignite.vip/", imgSrc: "https://checkmysweep.com/images/ignite.jpg", text: "Cash Ignite" }, 
+          // Add more links as needed
+        ];
+      
+        // Function to generate HTML for each link
+        function generateLink(link) {
+          return `
+            <a href="${link.href}">
+              <div class="link-items">
+                <img src="${link.imgSrc}"/>
+                <p>${link.text}</p>
+              </div>  
+            </a>
+          `;
+        }
+      
+        // Get the container element
+        const linksContainer = document.getElementById('main-container');
+
+        // Loop through the list of links and append them to the container
+        links.forEach(link => {
+          const linkHTML = generateLink(link);
+          linksContainer.innerHTML += linkHTML;
+        });
+      </script>
+</body>
 </html>
