@@ -1,0 +1,94 @@
+*{
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
+}
+
+body{
+    /* display: flex; */
+    /* flex-direction: column; */
+    max-width: 80%;
+    background-image: linear-gradient(to left bottom, #845ec2, #7464c8, #6169cd, #4b6ed0, #2c73d2);
+    font-family: 'Poppins', 'Open sans';
+    margin: 0 auto;
+    padding: 1rem;
+}
+
+p{
+    font-size: 1rem;
+}
+
+main{
+    display: flex;
+    flex-direction: column;
+    /* margin: 2rem; */
+    /* width: 100%; */
+    gap: 1rem;
+}
+
+main a{
+    padding: 1rem 1rem 1rem .5rem;
+    background-color: whitesmoke;
+    border-radius: 1rem;
+    text-decoration: none;
+    color: black;
+    box-shadow: .2rem .2rem .2em .2rem black;
+}
+
+.link-items{
+    display: flex;
+    min-height: 3rem;
+    align-items: center;
+    justify-content: space-between;
+}
+.link-items img{
+    display: block;
+    max-width: 15%;
+    border-radius: 50%;
+}
+
+.link-items p{
+    font-weight: bolder;
+    text-transform: uppercase;
+}
+
+.social-media-container{
+    display: flex;
+    /* From https://css.glass */
+    background: rgba(49, 111, 246, 0.92);
+    border-radius: 16px;
+    box-shadow: 0 4px 30px rgba(0, 0, 0, 0.1);
+    backdrop-filter: blur(10.9px);
+    -webkit-backdrop-filter: blur(10.9px);
+    padding: 1rem;  
+    margin: 1rem 0 1rem 0;
+    justify-content: space-between;
+    align-items: center;
+    color: white;
+    gap: 1rem;
+}
+.social-media-container img{
+    display: block;
+    max-width: 30%;
+    border-radius: 50%;
+}
+.social-icons{
+    display: flex;
+    flex-direction: column;
+    justify-content: space-evenly;
+    gap: .3rem;
+}
+
+.social-icons a{
+    text-decoration: none;
+    color: black;
+}
+
+@media (min-width: 575px){
+    body{
+        /* min-width: 100%; */
+    }
+    main a{
+
+    }
+}
