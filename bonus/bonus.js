@@ -12,7 +12,7 @@ async function loadModal() {
 
   // Optional: load modal.js behavior if needed
   const script = document.createElement("script");
-  script.src = "./modal/modal.js";
+  script.src = "./popup/popup.js";
   document.body.appendChild(script);
 }
 
