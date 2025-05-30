@@ -1,5 +1,5 @@
 // modal.js (exported version)
-export function initializeModal() {
+function initializeModal() {
   const isRegistered = localStorage.getItem("Name");
   console.log(isRegistered);
 
