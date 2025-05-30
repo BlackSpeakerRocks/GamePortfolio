@@ -16,6 +16,7 @@ async function loadModal() {
   const modalDiv = doc.querySelector('.modal');
   if (modalDiv) {
     container.appendChild(modalDiv);
+    initializeModal();
   }
 }
 
