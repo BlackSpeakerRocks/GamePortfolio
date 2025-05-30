@@ -6,7 +6,7 @@ async function loadModal() {
   const response = await fetch("./popup/popup.html");
   const html = await response.text();
 
-  const container = document.createElement("div");
+  const container = document.getElementById("spin_the_wheel");
   container.innerHTML = html;
   document.body.appendChild(container);
 }
