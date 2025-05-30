@@ -10,7 +10,7 @@ async function loadModal() {
 
    // Parse the HTML text into a DOM object
   const parser = new DOMParser();
-  const doc = parser.parseFromString(htmlText, 'text/html');
+  const doc = parser.parseFromString(html, 'text/html');
 
   // Get only the modal div (you can also use querySelector('.modal') if needed)
   const modalDiv = doc.querySelector('.modal');
