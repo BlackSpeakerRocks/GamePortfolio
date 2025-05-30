@@ -9,11 +9,6 @@ async function loadModal() {
   const container = document.createElement("div");
   container.innerHTML = html;
   document.body.appendChild(container);
-
-  // Optional: load modal.js behavior if needed
-  const script = document.createElement("script");
-  script.src = "./popup/popup.js";
-  document.body.appendChild(script);
 }
 
 function postSpinData() {
