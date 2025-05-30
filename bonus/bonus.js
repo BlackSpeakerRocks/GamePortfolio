@@ -7,8 +7,7 @@ async function loadModal() {
   const html = await response.text();
 
   const container = document.getElementById("spin_the_wheel");
-  container.innerHTML = html;
-  document.body.appendChild(container);
+container.append(html);
 }
 
 function postSpinData() {
