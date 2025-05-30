@@ -1,3 +1,46 @@
+const API_URL =
+  "https://script.google.com/macros/s/AKfycbynJU5d2qqs6s1pyA9vFVQv_-dSvao5lV_K3u5v77EG1qHFvp4fuIKw1J2Zyt4xCW9L6w/exec";
+const isRegisterd = localStorage.getItem("Name");
+console.log(isRegisterd);
+async function loadModal() {
+  const response = await fetch("./popup/popup.html");
+  const html = await response.text();
+
+  const container = document.createElement("div");
+  container.innerHTML = html;
+  document.body.appendChild(container);
+
+  // Optional: load modal.js behavior if needed
+  const script = document.createElement("script");
+  script.src = "./modal/modal.js";
+  document.body.appendChild(script);
+}
+
+function postSpinData() {
+  fetch(API_URL, {
+    method: "POST",
+    redirect: "follow",
+    body: JSON.stringify({
+      name: "Test Post",
+      prize: "100% Bonus",
+    }),
+    headers: {
+      "Content-type": "text/plain;charset=utf-8",
+    },
+  })
+    .then((resp) => resp.text())
+    .then((data) => {
+      console.log(data);
+    });
+}
+
+function getSpinData() {
+  fetch(API_URL)
+    .then((resp) => resp.json())
+    .then((data) => {
+      console.log(data);
+    });
+}
 const sectors = [
   { color: "#B0BEC5", text: "#333333", label: "TryAgain" },
   { color: "#43A047", text: "#333333", label: "50% Bonus" },
@@ -99,12 +142,16 @@ function engine() {
 
 function init() {
   sectors.forEach(drawSector);
-  rotate(); // Initial rotation
-  engine(); // Start engine
-  spinEl.addEventListener("click", () => {
-    if (!angVel) angVel = rand(0.25, 0.45);
-    spinButtonClicked = true;
-  });
+  if (isRegisterd === null) {
+    loadModal();
+  } else {
+    rotate(); // Initial rotation
+    engine(); // Start engine
+    spinEl.addEventListener("click", () => {
+      if (!angVel) angVel = rand(0.25, 0.45);
+      spinButtonClicked = true;
+    });
+  }
 }
 
 init();
