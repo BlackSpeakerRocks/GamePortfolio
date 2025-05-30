@@ -5,6 +5,8 @@ console.log(isRegisterd);
 async function loadModal() {
   const response = await fetch("./popup/popup.html");
   const html = await response.text();
+  
+    const container = document.getElementById("spin_the_wheel");
 
    // Parse the HTML text into a DOM object
   const parser = new DOMParser();
@@ -13,7 +15,7 @@ async function loadModal() {
   // Get only the modal div (you can also use querySelector('.modal') if needed)
   const modalDiv = doc.querySelector('.modal');
   if (modalDiv) {
-    document.body.appendChild(modalDiv);
+    container.appendChild(modalDiv);
   }
 }
 
