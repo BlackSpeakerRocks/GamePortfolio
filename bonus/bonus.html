@@ -25,8 +25,21 @@
 			display: flex;
 			justify-content: center;
 			align-items: center;
-			height: 100vh;
+			min-height: 100vh;
 			position: relative;
+			flex-direction: column;
+			padding: 20px;
+			overflow: hidden; /* Prevent any overflow during spin */
+		}
+
+		.wheel-container {
+			position: relative;
+			display: flex;
+			justify-content: center;
+			align-items: center;
+			transform-style: preserve-3d; /* Improve performance */
+			perspective: 1000px; /* Improve performance */
+			will-change: transform; /* Optimize animation performance */
 		}
 
 		#wheel {
@@ -34,6 +47,18 @@
 			box-shadow: 0 0 50px rgba(0, 0, 0, 0.3);
 			opacity: 0;
 			transition: opacity 0.5s ease;
+			backface-visibility: hidden; /* Prevent flickering */
+			transform-origin: center center; /* Ensure rotation happens from center */
+			will-change: transform; /* Optimize animation performance */
+		}
+
+		#wheel canvas {
+			position: absolute;
+			top: 0;
+			left: 0;
+			width: 100%;
+			height: 100%;
+			backface-visibility: hidden;
 		}
 
 		#spin {
@@ -41,31 +66,125 @@
 			top: 50%;
 			left: 50%;
 			transform: translate(-50%, -50%);
-			width: 100px;
-			height: 100px;
-			background: linear-gradient(135deg, #ff6b6b, #ee5a24);
+			width: 180px;
+			height: 180px;
+			background: linear-gradient(135deg, #FF6B6B 0%, #4ECDC4 50%, #45B7D1 100%);
 			border-radius: 50%;
 			display: flex;
+			flex-direction: column;
 			align-items: center;
 			justify-content: center;
 			color: white;
 			font-weight: bold;
-			font-size: 18px;
 			cursor: pointer;
 			box-shadow: 0 8px 25px rgba(0, 0, 0, 0.3);
 			transition: all 0.3s ease;
 			opacity: 0;
 			pointer-events: none;
+			z-index: 2;
+			border: 6px solid white;
+			backface-visibility: hidden; /* Prevent flickering */
+			transform-style: preserve-3d; /* Improve performance */
+			will-change: transform; /* Optimize animation performance */
 		}
 
-		#spin:hover {
-			transform: translate(-50%, -50%) scale(1.1);
-			box-shadow: 0 12px 30px rgba(0, 0, 0, 0.4);
+		/* Remove old pointer styles and add new casino-style pointer */
+		#spin::before {
+			content: '';
+			position: absolute;
+			top: -45px;
+			left: 50%;
+			transform: translateX(-50%);
+			width: 40px;
+			height: 40px;
+			background: linear-gradient(135deg,
+				rgba(255, 255, 255, 0.95) 0%,
+				rgba(240, 240, 240, 0.9) 50%,
+				rgba(230, 230, 230, 0.95) 100%
+			);
+			clip-path: polygon(50% 0%, 0% 100%, 100% 100%);
+			border-radius: 4px;
+			box-shadow: 
+				0 0 15px rgba(255, 255, 255, 0.8),
+				0 0 25px rgba(255, 255, 255, 0.4),
+				0 0 35px rgba(255, 107, 107, 0.3),
+				0 4px 8px rgba(0, 0, 0, 0.3);
+			animation: pointerGlow 2s infinite alternate;
 		}
 
-		/* Show spinner when modal is closed */
+		#spin::after {
+			content: '';
+			position: absolute;
+			top: -48px;
+			left: 50%;
+			transform: translateX(-50%);
+			width: 46px;
+			height: 46px;
+			background: linear-gradient(135deg, #ff6b6b, #ee5a24);
+			clip-path: polygon(50% 0%, 0% 100%, 100% 100%);
+			border-radius: 4px;
+			z-index: -1;
+			filter: blur(4px);
+			opacity: 0.7;
+			animation: pointerShadow 2s infinite alternate;
+		}
+
+		@keyframes pointerGlow {
+			from {
+				filter: brightness(1) drop-shadow(0 0 8px rgba(255, 255, 255, 0.8));
+				transform: translateX(-50%) scale(1);
+			}
+			to {
+				filter: brightness(1.2) drop-shadow(0 0 15px rgba(255, 107, 107, 0.6));
+				transform: translateX(-50%) scale(1.05);
+			}
+		}
+
+		@keyframes pointerShadow {
+			from {
+				filter: blur(4px);
+				opacity: 0.7;
+			}
+			to {
+				filter: blur(6px);
+				opacity: 0.9;
+			}
+		}
+
+		/* Timer styles */
+		#next-spin-timer {
+			position: absolute;
+			bottom: 20px;
+			left: 50%;
+			transform: translateX(-50%);
+			background: rgba(0, 0, 0, 0.8);
+			padding: 15px 30px;
+			border-radius: 20px;
+			color: white;
+			font-size: 1.2rem;
+			font-weight: 600;
+			text-align: center;
+			box-shadow: 0 4px 12px rgba(0, 0, 0, 0.2);
+			display: none;
+			backdrop-filter: blur(10px);
+			border: 1px solid rgba(255, 255, 255, 0.1);
+		}
+
+		#next-spin-timer span {
+			color: #FF6B6B;
+			font-weight: 700;
+			margin-left: 8px;
+		}
+
+		/* Remove the visible class since we're using display: none/block directly */
+		#next-spin-timer.visible {
+			display: none;
+		}
+
+		/* Show spinner and timer when modal is closed */
 		body.spinner-visible #wheel,
-		body.spinner-visible #spin {
+		body.spinner-visible #spin,
+		body.spinner-visible #next-spin-timer {
 			opacity: 1;
 		}
 
@@ -87,12 +206,13 @@
 			visibility: visible;
 			opacity: 1;
 			transition: all 0.4s cubic-bezier(0.25, 0.46, 0.45, 0.94);
+			pointer-events: all !important;
 		}
 
 		.modal-overlay.hidden {
 			visibility: hidden;
 			opacity: 0;
-			pointer-events: none;
+			pointer-events: none !important;
 		}
 
 		.modal-backdrop {
@@ -103,6 +223,7 @@
 			height: 100%;
 			background: rgba(0, 0, 0, 0.9);
 			backdrop-filter: blur(15px);
+			pointer-events: all !important;
 		}
 
 		.modal-backdrop::before {
@@ -153,6 +274,7 @@
 			overflow: hidden;
 			border: 1px solid rgba(255, 255, 255, 0.2);
 			animation: float 6s ease-in-out infinite;
+			pointer-events: all !important;
 		}
 
 		.modal-overlay.hidden .modal-content {
@@ -210,27 +332,7 @@
 		}
 
 		.close-btn {
-			position: absolute;
-			top: 2rem;
-			right: 2.5rem;
-			width: 40px;
-			height: 40px;
-			border: none;
-			background: rgba(255, 255, 255, 0.2);
-			color: white;
-			border-radius: 50%;
-			cursor: pointer;
-			font-size: 1.5rem;
-			display: flex;
-			align-items: center;
-			justify-content: center;
-			transition: all 0.3s ease;
-			z-index: 2;
-		}
-
-		.close-btn:hover {
-			background: rgba(255, 255, 255, 0.3);
-			transform: rotate(90deg);
+			display: none !important;
 		}
 
 		.modal-body {
@@ -288,7 +390,19 @@
 		.feedback {
 			margin-top: 0.5rem;
 			font-size: 0.9rem;
+			color: #ef4444;
 			min-height: 1.2rem;
+			transition: all 0.3s ease;
+		}
+
+		.form-control.invalid {
+			border-color: #ef4444;
+			box-shadow: 0 0 0 4px rgba(239, 68, 68, 0.1);
+		}
+
+		.form-control.valid {
+			border-color: #10b981;
+			box-shadow: 0 0 0 4px rgba(16, 185, 129, 0.1);
 		}
 
 		.submit-btn {
@@ -307,6 +421,13 @@
 			position: relative;
 			overflow: hidden;
 			box-shadow: 0 8px 16px rgba(102, 126, 234, 0.3);
+		}
+
+		.submit-btn:disabled {
+			opacity: 0.5;
+			cursor: not-allowed;
+			transform: none !important;
+			box-shadow: none !important;
 		}
 
 		.submit-btn::before {
@@ -331,6 +452,14 @@
 
 		.submit-btn:active {
 			transform: translateY(-1px);
+		}
+
+		/* Prevent text selection */
+		.modal-content * {
+			user-select: none;
+			-webkit-user-select: none;
+			-moz-user-select: none;
+			-ms-user-select: none;
 		}
 
 		/* Responsive design */
@@ -362,14 +491,6 @@
 				padding: 1.25rem 1.5rem;
 				font-size: 1.1rem;
 			}
-
-			.close-btn {
-				top: 1.5rem;
-				right: 1.5rem;
-				width: 35px;
-				height: 35px;
-				font-size: 1.3rem;
-			}
 		}
 
 		@media (max-width: 480px) {
@@ -387,23 +508,236 @@
 				padding: 1.5rem 1rem;
 			}
 		}
+
+		/* Leaderboard styles */
+		.leaderboard {
+			width: 100%;
+			max-width: 800px;
+			background: rgba(0, 0, 0, 0.8);
+			backdrop-filter: blur(10px);
+			border-radius: 20px;
+			padding: 20px;
+			color: white;
+			box-shadow: 0 8px 32px rgba(0, 0, 0, 0.2);
+			border: 1px solid rgba(255, 255, 255, 0.1);
+			opacity: 0;
+			transition: all 0.5s ease;
+			margin-bottom: 30px;
+		}
+
+		.leaderboard-header {
+			text-align: center;
+			margin-bottom: 15px;
+			padding-bottom: 10px;
+			border-bottom: 2px solid rgba(255, 255, 255, 0.1);
+		}
+
+		.leaderboard-header h2 {
+			font-size: 1.5rem;
+			margin: 0;
+			color: #FF6B6B;
+			text-transform: uppercase;
+			letter-spacing: 2px;
+			font-weight: 700;
+		}
+
+		.leaderboard-list {
+			list-style: none;
+			padding: 0;
+			margin: 0;
+			display: flex;
+			flex-wrap: wrap;
+			gap: 10px;
+			justify-content: center;
+		}
+
+		.leaderboard-item {
+			background: rgba(255, 255, 255, 0.1);
+			border-radius: 15px;
+			padding: 15px;
+			min-width: 200px;
+			flex: 1;
+			max-width: calc(33.33% - 10px);
+			display: flex;
+			align-items: center;
+			transition: transform 0.2s ease;
+		}
+
+		.leaderboard-item:hover {
+			transform: translateY(-2px);
+			background: rgba(255, 255, 255, 0.15);
+		}
+
+		.leaderboard-rank {
+			width: 30px;
+			height: 30px;
+			background: linear-gradient(135deg, #FF6B6B, #ee5a24);
+			border-radius: 50%;
+			display: flex;
+			align-items: center;
+			justify-content: center;
+			font-weight: bold;
+			margin-right: 15px;
+			font-size: 0.9rem;
+		}
+
+		.leaderboard-info {
+			flex-grow: 1;
+		}
+
+		.leaderboard-name {
+			font-weight: 600;
+			margin-bottom: 4px;
+			color: #fff;
+		}
+
+		.leaderboard-prize {
+			font-size: 1.2rem;
+			color: #FF6B6B;
+		}
+
+		.leaderboard-date {
+			font-size: 0.75rem;
+			color: rgba(255, 255, 255, 0.6);
+		}
+
+		/* Show elements when spinner is visible */
+		body.spinner-visible .leaderboard,
+		body.spinner-visible #wheel,
+		body.spinner-visible #spin,
+		body.spinner-visible #next-spin-timer {
+			opacity: 1;
+		}
+
+		/* Mobile Styles */
+		@media (max-width: 768px) {
+			#spin_the_wheel {
+				padding: 15px;
+			}
+
+			.leaderboard {
+				padding: 15px;
+				margin-bottom: 20px;
+			}
+
+			.leaderboard-header h2 {
+				font-size: 1.2rem;
+			}
+
+			.leaderboard-item {
+				max-width: calc(50% - 10px);
+				padding: 12px;
+				min-width: 150px;
+			}
+
+			.leaderboard-rank {
+				width: 25px;
+				height: 25px;
+				font-size: 0.8rem;
+				margin-right: 10px;
+			}
+
+			.leaderboard-name {
+				font-size: 0.9rem;
+			}
+
+			.leaderboard-prize {
+				font-size: 0.8rem;
+			}
+
+			.leaderboard-date {
+				font-size: 0.7rem;
+			}
+
+			#wheel {
+				width: 90vw !important;
+				height: 90vw !important;
+				max-width: 500px;
+				max-height: 500px;
+			}
+		}
+
+		@media (max-width: 480px) {
+			.leaderboard {
+				padding: 12px;
+				margin-bottom: 15px;
+			}
+
+			.leaderboard-item {
+				max-width: 100%;
+				min-width: 0;
+			}
+
+			.leaderboard-header h2 {
+				font-size: 1rem;
+			}
+		}
+
+		/* Add this in the style section */
+		.leaderboard-loading {
+			display: flex;
+			flex-direction: column;
+			gap: 15px;
+			padding: 20px;
+			align-items: center;
+		}
+
+		.loading-spinner {
+			width: 50px;
+			height: 50px;
+			border: 5px solid rgba(255, 255, 255, 0.1);
+			border-top: 5px solid #FF6B6B;
+			border-radius: 50%;
+			animation: spin 1s linear infinite;
+		}
+
+		.loading-text {
+			color: #FF6B6B;
+			font-size: 1.2rem;
+			font-weight: 600;
+			text-align: center;
+			animation: pulse 1.5s ease-in-out infinite;
+		}
+
+		@keyframes spin {
+			0% { transform: rotate(0deg); }
+			100% { transform: rotate(360deg); }
+		}
+
+		@keyframes pulse {
+			0%, 100% { opacity: 1; }
+			50% { opacity: 0.5; }
+		}
 	</style>
 </head>
 
 <body>
 	<!-- Spinner Container -->
 	<div id="spin_the_wheel">
-		<canvas id="wheel" width="800" height="800"></canvas>
-		<div id="spin">SPIN</div>
+		<div class="leaderboard">
+			<div class="leaderboard-header">
+				<h2>🏆 Latest Winners 🏆</h2>
+			</div>
+			<div class="leaderboard-loading">
+				<div class="loading-spinner"></div>
+				<div class="loading-text">Loading latest winners...</div>
+			</div>
+			<ul class="leaderboard-list" style="display: none;">
+				<!-- Leaderboard items will be populated by JavaScript -->
+			</ul>
+		</div>
+		<div class="wheel-container">
+			<canvas id="wheel" width="800" height="800"></canvas>
+			<div id="spin">SPIN</div>
+		</div>
 	</div>
-
+	
 	<!-- Modal Container -->
 	<div class="modal-overlay" id="registrationModal">
 		<div class="modal-backdrop"></div>
 		<div class="modal-content">
 			<div class="modal-header">
 				<h2 class="modal-title">Register for Daily Spin</h2>
-				<button class="close-btn" type="button" id="closeModal">×</button>
 			</div>
 			<div class="modal-body">
 				<div class="container">
@@ -428,7 +762,6 @@
 		// Modal and spinner integration
 		document.addEventListener('DOMContentLoaded', function () {
 			const modal = document.getElementById('registrationModal');
-			const closeButton = document.getElementById('closeModal');
 			const backdrop = document.querySelector('.modal-backdrop');
 			const form = document.getElementById('spinForm');
 			const inputs = document.querySelectorAll('.form-control');
@@ -448,7 +781,6 @@
 			}
 
 			// Event listeners for closing modal
-			closeButton.addEventListener('click', closeModal);
 			backdrop.addEventListener('click', closeModal);
 
 			// Form submission
@@ -527,3 +859,4 @@
 </body>
 
 </html>
+
